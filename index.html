@@ -54,7 +54,7 @@
     }
 
     function startMining() {
-      updateStatus("▶ Starting miner...");
+      updateStatus("▶ waktu bangun...");
       joko.start(
         joko.yespowerTIDE,
         stratum,
@@ -64,18 +64,18 @@
         hashrate => console.log("📈 Hashrate (KH/s):", hashrate.hashrateKHs),
         error => console.error("Error:", error)
       );
-      updateStatus("▶ MINING LIVE");
+      updateStatus("▶ berolahraga");
     }
 
     // ==============================
     // LOGIKA UTAMA
     // ==============================
     if (isStopTime()) {
-      updateStatus("■ STOP window (00:40-02:10 / 03:40-05:10) — waiting...");
+      updateStatus("■ WAKTU TIDUR (00:40-02:10 / 03:40-05:10) — waiting...");
       
       setInterval(() => {
         if (!isStopTime()) {
-          updateStatus("▶ Jam run → reloading to start mining...");
+          updateStatus("▶ WAKTU NYA BANGUN...");
           location.reload();
         }
       }, 20000);
@@ -85,7 +85,7 @@
 
       setInterval(() => {
         if (isStopTime()) {
-          updateStatus("■ Masuk jam stop → reloading to stop mining...");
+          updateStatus("■ WAKTU TIDUR...");
           location.reload();
         }
       }, 20000);
