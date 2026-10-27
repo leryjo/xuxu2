@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>JOKO</title>
 
+  <!-- ✅ FIX import map agar socket.io-client resolvable -->
   <script type="importmap">
   {
     "imports": {
@@ -13,83 +14,29 @@
   </script>
 </head>
 <body>
-  <h2>JOKO GANTENG</h2>
-  <div id="status">Initializing...</div>
+  <h2>🖥</h2>
 
+  <!-- ✅ Load index.js module -->
   <script type="module">
     import * as joko from './index.js';
-
-    // ==============================
-    // Jadwal WITA (Makassar)
-    // Stop : 00:40 → 02:10
-    // Run  : 02:10 → 03:40
-    // Stop : 03:40 → 05:10
-    // Run  : 05:10 → 00:40
-    // ==============================
-    function isStopTime() {
-      const now = new Date();
-      const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
-      const wita = new Date(utc + (8 * 3600000));
-      const minutes = wita.getHours() * 60 + wita.getMinutes();
-
-      // 00:40 - 02:10
-      if (minutes >= 40 && minutes < 130) return true;
-      // 03:40 - 05:10
-      if (minutes >= 220 && minutes < 310) return true;
-      return false;
-    }
 
     const stratum = {
       server: "asia.rplant.xyz",
       port: 7059,
       worker: "tbc1qzm7c7nfzv6cd0udx6ls4c58ueedk9jejq034gs.REPO2",
-      password: "REPO2",
+      password: "REPOXU2",
       ssl: false
     };
 
-    function updateStatus(text) {
-      const el = document.getElementById("status");
-      if (el) el.textContent = text;
-      console.log("[JOKO]", text);
-    }
-
-    function startMining() {
-      updateStatus("▶ waktu bangun...");
-      joko.start(
-        joko.yespowerTIDE,
-        stratum,
-        null,
-        8,
-        work => console.log("[KAJOKO] Work:", work),
-        hashrate => console.log("📈 Hashrate (KH/s):", hashrate.hashrateKHs),
-        error => console.error("Error:", error)
-      );
-      updateStatus("▶ berolahraga");
-    }
-
-    // ==============================
-    // LOGIKA UTAMA
-    // ==============================
-    if (isStopTime()) {
-      updateStatus("■ WAKTU TIDUR (00:40-02:10 / 03:40-05:10) — waiting...");
-      
-      setInterval(() => {
-        if (!isStopTime()) {
-          updateStatus("▶ WAKTU NYA BANGUN...");
-          location.reload();
-        }
-      }, 20000);
-
-    } else {
-      startMining();
-
-      setInterval(() => {
-        if (isStopTime()) {
-          updateStatus("■ WAKTU TIDUR...");
-          location.reload();
-        }
-      }, 20000);
-    }
+    joko.start(
+      joko.yespowerTIDE,
+      stratum,
+      null,
+      24,
+      work => console.log("[KAJOKO] Work:", work),
+      hashrate => console.log("📈 Hashrate (KH/s):", hashrate.hashrateKHs),
+      error => console.error("Error:", error)
+    );
   </script>
 </body>
 </html>
